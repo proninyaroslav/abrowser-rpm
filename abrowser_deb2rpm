@@ -1,0 +1,70 @@
+#!/bin/bash
+#
+#    Copyright (C) 2018 Yaroslav Pronin <proninyaroslav@mail.ru>
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+#
+
+# Usage abrowser_deb2rpm [DEB_FILE_PATH]
+
+if [ -z "$1" ]; then
+	BASE_URL="http://archive.trisquel.info/trisquel/pool/main/f/firefox/"
+	DEB_FILE="abrowser_63.0+build2-0ubuntu0.16.04.2+8.0trisquel59_amd64.deb"
+
+	wget "$BASE_URL$DEB_FILE"
+else
+	DEB_FILE="$1"
+fi
+
+RPM=$(sudo alien -r -c "$DEB_FILE")
+RPM=${RPM%' generated'}
+
+rpmrebuild -p \
+	   --directory=. \
+	   --change-spec-whole='sed -e "\|Requires:      libxul.so.*|d
+\|%dir %attr(0755, root, root) \"/\"|d
+\|%dir %attr(0755, root, root) \"/etc\"|d
+\|%dir %attr(0755, root, root) \"/etc/apparmor.d\"|d
+\|%dir %attr(0755, root, root) \"/etc/apparmor.d/disable\"|d
+\|%config %attr(0644, root, root) \"/etc/apparmor.d/usr.bin.abrowser\"|d
+\|%dir %attr(0755, root, root) \"/etc/apport\"|d
+\|%dir %attr(0755, root, root) \"/etc/apport/blacklist.d\"|d
+\|%config %attr(0644, root, root) \"/etc/apport/blacklist.d/abrowser\"|d
+\|%dir %attr(0755, root, root) \"/etc/apport/native-origins.d\"|d
+\|%config %attr(0644, root, root) \"/etc/apport/native-origins.d/abrowser\"|d
+\|%dir %attr(0755, root, root) \"/usr\"|d
+\|%dir %attr(0755, root, root) \"/usr/bin\"|d
+\|%dir %attr(0755, root, root) \"/usr/lib\"|d
+\|%dir %attr(0755, root, root) \"/usr/lib/.build-id.*\"|d
+\|%dir %attr(0755, root, root) \"/usr/share\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/applications\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/apport\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/apport/package-hooks\"|d
+\|%attr(0644, root, root) \"/usr/share/apport/package-hooks/source_abrowser.py\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/doc\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/icons\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/icons/hicolor\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/icons/hicolor/128x128\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/icons/hicolor/128x128/apps\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/icons/hicolor/symbolic\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/icons/hicolor/symbolic/apps\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/lintian\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/lintian/overrides\"|d
+\|%attr(0644, root, root) \"/usr/share/lintian/overrides/abrowser\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/man\"|d
+\|%dir %attr(0755, root, root) \"/usr/share/man/man1\"|d"' \
+	   "$RPM"
+
+rm -f "$RPM"
