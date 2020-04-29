@@ -22,7 +22,7 @@
 if [ -z "$1" ]; then
 	BASE_URL="http://archive.trisquel.info/trisquel/pool/main/f/firefox/"
 
-	DEB_FILE="abrowser_74.0+build3-0ubuntu0.16.04.1+8.0trisquel67_amd64.deb"
+	DEB_FILE="abrowser_75.0+build3-0ubuntu0.18.04.1+9.0trisquel69_amd64.deb"
 
 	wget "$BASE_URL$DEB_FILE"
 else
