@@ -10,6 +10,7 @@ You can download prebuilt RPM's from [Release](https://github.com/proninyaroslav
 ## Dependencies
 
  - `alien`
+ - `curl`
  - `rpmrebuild`
 
 ## Building
