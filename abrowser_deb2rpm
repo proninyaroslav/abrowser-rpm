@@ -21,7 +21,7 @@
 
 BASE_URL="http://archive.trisquel.info/trisquel/pool/main/f/firefox/"
 
-RELEASE_FILE="abrowser_94.0+build3-0ubuntu0.20.04.1+10.0trisquel84_amd64.deb"
+RELEASE_FILE="abrowser_94.0+build3-0ubuntu0.20.04.1+10.0trisquel85_amd64.deb"
 
 while getopts "p:r:" OPTION || :; do
     case $OPTION in
