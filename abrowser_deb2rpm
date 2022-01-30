@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-#    Copyright (C) 2018-2021 Yaroslav Pronin <proninyaroslav@mail.ru>
+#    Copyright (C) 2018-2022 Yaroslav Pronin <proninyaroslav@mail.ru>
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 
 BASE_URL="http://archive.trisquel.info/trisquel/pool/main/f/firefox/"
 
-RELEASE_FILE="abrowser_95.0+build1-0ubuntu0.20.04.1+10.0trisquel85_amd64.deb"
+RELEASE_FILE="abrowser_96.0+build2-0ubuntu0.18.04.1+9.0trisquel84_amd64.deb"
 
 while getopts "p:r:" OPTION || :; do
     case $OPTION in
